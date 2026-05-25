@@ -64,7 +64,7 @@ function Post({ post }: Props) {
                     ) : (
                         <div className="h-14 w-14 rounded-full border-red-500 border-2 bg-gray-300" aria-hidden />
                     )}
-                    <p className="font-extralight text-sm">by <span className="text-red-600">{post.author.name}</span> - published {new Date(post._createdAt).toLocaleString()}</p>
+                    <p className="font-extralight text-sm">by <span className="text-red-600">{post.author?.name ?? 'Unknown author'}</span> - published {new Date(post._createdAt).toLocaleString()}</p>
                 </div>
                 <h2 className="text-xl font-light text-gray-500 mb-2">{post.description}</h2>
 

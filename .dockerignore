@@ -1,0 +1,7 @@
+node_modules
+.next
+.git
+sd-blog/node_modules
+sd-blog/dist
+*.log
+.env*.local

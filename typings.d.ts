@@ -13,15 +13,15 @@ export interface Post {
     slug: {
         current: string;
     };
-    author: {
-        name: string;
+    author?: {
+        name?: string;
         image?: {
             asset: {
                 _ref: string;
                 _type: string;
             };
         };
-    };
+    } | null;
     body: [object];
 }
 export interface Comment {

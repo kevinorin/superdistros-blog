@@ -45,13 +45,13 @@ export default function Home({ posts }: Props) {
                 <div className="flex justify-start content-evenly">
                   <div>
                     {imageUrl(post.author?.image) ? (
-                      <img className="h-8 rounded-full" src={imageUrl(post.author.image)} alt="" />
+                      <img className="h-8 rounded-full" src={imageUrl(post.author?.image)} alt="" />
                     ) : (
                       <div className="h-8 w-8 rounded-full bg-gray-300" aria-hidden />
                     )}
                   </div>
                   <div>
-                    <p className=""><span className="p-2 align-middle">{post.author.name}</span></p>
+                    <p className=""><span className="p-2 align-middle">{post.author?.name ?? 'Unknown author'}</span></p>
                   </div>
                 </div>
                 <Link key={post._id} href={`/post/${post.slug.current}`}>
