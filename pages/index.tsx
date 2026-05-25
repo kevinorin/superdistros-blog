@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Header from '../components/Header';
 import Link from "next/link";
-import { sanityClient, urlFor } from "../sanity";
+import { sanityClient, imageUrl } from "../sanity";
 import { Post } from "../typings";
 
 interface Props {
@@ -35,12 +35,20 @@ export default function Home({ posts }: Props) {
           
             <div className="group overflow-hidden">
               <Link key={post._id} href={`/post/${post.slug.current}`}>
-                <img className="h-60 w-full rounded-lg cursor-pointer object-cover group-hover:scale-105 transition-transform duration-200 ease-in-out" src={urlFor(post.mainImage).url()!} alt="" />
+                {imageUrl(post.mainImage) ? (
+                  <img className="h-60 w-full rounded-lg cursor-pointer object-cover group-hover:scale-105 transition-transform duration-200 ease-in-out" src={imageUrl(post.mainImage)} alt="" />
+                ) : (
+                  <div className="h-60 w-full rounded-lg bg-gray-200" aria-hidden />
+                )}
               </Link>
               <div className="p-3 bg-white justify-between content-center">
                 <div className="flex justify-start content-evenly">
                   <div>
-                    <img className="h-8 rounded-full" src={urlFor(post.author.image).url()} alt="" />
+                    {imageUrl(post.author?.image) ? (
+                      <img className="h-8 rounded-full" src={imageUrl(post.author.image)} alt="" />
+                    ) : (
+                      <div className="h-8 w-8 rounded-full bg-gray-300" aria-hidden />
+                    )}
                   </div>
                   <div>
                     <p className=""><span className="p-2 align-middle">{post.author.name}</span></p>

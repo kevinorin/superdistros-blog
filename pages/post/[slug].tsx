@@ -1,8 +1,7 @@
-import { url } from 'inspector';
 import React from 'react';
 import { GetStaticProps } from 'next';
 import Header from '../../components/Header';
-import { sanityClient, urlFor } from '../../sanity';
+import { sanityClient, imageUrl } from '../../sanity';
 import { Post } from "../../typings";
 import PortableText from 'react-portable-text';
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -19,6 +18,8 @@ interface CFormInput {
 }
 
 function Post({ post }: Props) {
+    const mainImageSrc = imageUrl(post.mainImage);
+    const authorImageSrc = imageUrl(post.author?.image);
 
     // comment form thank you
     const [submitted, setSubmitted] = React.useState(false);
@@ -50,11 +51,19 @@ function Post({ post }: Props) {
         <main>
             <Header />
 
-            <img className="w-full h-72 object-cover" src={urlFor(post.mainImage).url()!} alt=""/>
+            {mainImageSrc ? (
+                <img className="w-full h-72 object-cover" src={mainImageSrc} alt="" />
+            ) : (
+                <div className="w-full h-72 bg-gray-200" aria-hidden />
+            )}
             <article className="max-w-3xl mx-auto p-5">
                 <h1 className="text-3xl mt-10 mb-3">{post.title}</h1>
                 <div className="flex items-center space-x-2">
-                    <img className="h-14 w-14 rounded-full border-red-500 border-2" src={urlFor(post.author.image).url()!} alt="" />
+                    {authorImageSrc ? (
+                        <img className="h-14 w-14 rounded-full border-red-500 border-2" src={authorImageSrc} alt="" />
+                    ) : (
+                        <div className="h-14 w-14 rounded-full border-red-500 border-2 bg-gray-300" aria-hidden />
+                    )}
                     <p className="font-extralight text-sm">by <span className="text-red-600">{post.author.name}</span> - published {new Date(post._createdAt).toLocaleString()}</p>
                 </div>
                 <h2 className="text-xl font-light text-gray-500 mb-2">{post.description}</h2>
@@ -140,7 +149,7 @@ function Post({ post }: Props) {
                 <h3 className='text-3xl font-bold'>Comments</h3>
                 <hr className='pb-2'/>
 
-                {post.comments.map((comment) => (
+                {(post.comments ?? []).map((comment) => (
                     <div>
                         <p className=''>
                            <span className='text-green-500 font-bold'>{comment.name}: </span>

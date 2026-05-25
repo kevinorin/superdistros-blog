@@ -12,3 +12,8 @@ export const config = {
 export const sanityClient = createClient(config);
 
 export const urlFor = (source) => imageUrlBuilder(config).image(source);
+
+export function imageUrl(source) {
+    if (!source) return undefined;
+    return imageUrlBuilder(config).image(source).url();
+}

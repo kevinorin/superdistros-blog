@@ -2,11 +2,12 @@ export interface Post {
     _id: string;
     _createdAt: string;
     title: string;
-    comments: [Comment];
+    comments?: Comment[];
     description: string;
-    mainImage: {
+    mainImage?: {
         asset: {
-            url: string;
+            _ref: string;
+            _type: string;
         };
     };
     slug: {
@@ -14,7 +15,12 @@ export interface Post {
     };
     author: {
         name: string;
-        image: string;
+        image?: {
+            asset: {
+                _ref: string;
+                _type: string;
+            };
+        };
     };
     body: [object];
 }
